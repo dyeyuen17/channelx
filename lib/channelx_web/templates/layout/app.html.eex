@@ -20,10 +20,13 @@
       <h5 class="my-0 mr-md-auto font-weight-normal">
         <a href="/" class="navbar-brand text-dark"><strong>Channel-X</strong></a>
       </h5>
-      <%= if Prater.Auth.user_signed_in?(@conn) do %>
+      <%= if Channelx.Auth.user_signed_in?(@conn) do %>
         <nav class="my-2 my-md-0 mr-md-3">
-          Signed in as: <strong><%= Prater.Auth.current_user(@conn).username %></strong>
+          Signed in as: <strong><%= Channelx.Auth.current_user(@conn).username %></strong>
         </nav>
+        <%= link "Sign Out", to: session_path(@conn, :delete), method: :delete, class: "btn btn-outline-primary" %>
+      <% else %>
+        <%= link "Sign In", to: session_path(@conn, :new), class: "btn btn-outline-primary" %>
       <% end %>
     </div>
 
