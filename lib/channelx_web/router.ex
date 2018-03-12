@@ -19,6 +19,7 @@ defmodule ChannelxWeb.Router do
     get "/", RoomController, :index
     resources "/rooms", RoomController
     resources "/sessions", SessionController, only: [:new, :create]
+    delete "/sign out", SessionController, :delete
   end
 
 end
