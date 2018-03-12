@@ -20,14 +20,19 @@
       <h5 class="my-0 mr-md-auto font-weight-normal">
         <a href="/" class="navbar-brand text-dark"><strong>Channel-X</strong></a>
       </h5>
+      <%= if Prater.Auth.user_signed_in?(@conn) do %>
+        <nav class="my-2 my-md-0 mr-md-3">
+          Signed in as: <strong><%= Prater.Auth.current_user(@conn).username %></strong>
+        </nav>
+      <% end %>
     </div>
 
-    <%= unless is_nil(get_flash(@conn, :info)) do %>
+    <!-- <%= unless is_nil(get_flash(@conn, :info)) do %>
       <p class="alert alert-success" role="alert"><%= get_flash(@conn, :info) %></p>
     <% end %>
     <%= unless is_nil(get_flash(@conn, :error)) do %>
       <p class="alert alert-danger" role="alert"><%= get_flash(@conn, :error) %></p>
-    <% end %>
+    <% end %> -->
 
     <div class="container">
       <p class="alert alert-info" role="alert"><%= get_flash(@conn, :info) %></p>
