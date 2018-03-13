@@ -3,7 +3,7 @@
 
 // To use Phoenix channels, the first step is to import Socket
 // and connect at the socket path in "lib/web/endpoint.ex":
-import {Socket} from "phoenix"
+import {Socket, Presence} from "phoenix"
 
 let socket = new Socket("/socket", {params: {token: window.userToken}})
 
@@ -53,13 +53,16 @@ let socket = new Socket("/socket", {params: {token: window.userToken}})
 
 socket.connect()
 let channelRoomId = window.channelRoomId
+let presences = {};
+
+const typingTimeout = 1000;
+var typingTimer;
+let userTyping = false;
 
 
-// Now that you are connected, you can join channels with a topic:
 if (channelRoomId) {
+  // Now that you are connected, you can join channels with a topic:
   let channel = socket.channel(`room:${channelRoomId}`, {})
-  console.log(channel)
-  console.log(channelRoomId)
   channel.join()
   .receive("ok", resp => { console.log("Joined successfully", resp) })
   .receive("error", resp => { console.log("Unable to join", resp) })
@@ -69,14 +72,71 @@ if (channelRoomId) {
     renderMessage(message)
   });
 
+  channel.on("presence_state", state => {
+    presences = Presence.syncState(presences, state)
+    renderOnlineUsers(presences)
+  })
+
+  channel.on("presence_diff", diff => {
+    presences = Presence.syncDiff(presences, diff)
+    renderOnlineUsers(presences)
+  })
+
   document.querySelector("#new-message").addEventListener('submit', (e) => {
     e.preventDefault()
     let messageInput = e.target.querySelector('#message-content')
 
-    channel.push('message:add', { message: messageInput.value })
+    if (messageInput.value.trim() != "") {
+      channel.push('message:add', { message: messageInput.value })
+      userStopsTyping()
+    }
 
     messageInput.value = ""
   });
+
+  document.querySelector("#message-content").addEventListener('keydown', () => {
+    userStartsTyping()
+    clearTimeout(typingTimer);
+  })
+
+  document.querySelector("#message-content").addEventListener('keyup', () => {
+    clearTimeout(typingTimer);
+    typingTimer = setTimeout(userStopsTyping, typingTimeout);
+  })
+
+  const userStartsTyping = function() {
+    if (userTyping) { return }
+
+    userTyping = true
+    channel.push('user:typing', { typing: true })
+  }
+
+  const userStopsTyping = function() {
+    clearTimeout(typingTimer);
+    userTyping = false
+    channel.push('user:typing', { typing: false })
+  }
+}
+
+const renderOnlineUsers = function(presences) {
+  let onlineUsers = Presence.list(presences, (_id, {metas: [user, ...rest]}) => {
+    return onlineUserTemplate(user);
+  }).join("")
+
+  document.querySelector("#online-users").innerHTML = onlineUsers;
+}
+
+const onlineUserTemplate = function(user) {
+  var typingIndicator = ''
+  if (user.typing) {
+    typingIndicator = ' <i>(typing...)</i>'
+  }
+
+  return `
+    <div id="online-user-${user.user_id}">
+      <strong class="text-secondary">${user.username}</strong> ${typingIndicator}
+    </div>
+  `
 }
 
 const renderMessage =  function(message) {

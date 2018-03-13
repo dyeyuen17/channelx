@@ -3,6 +3,7 @@ defmodule Channelx.Auth.User do
   import Ecto.Changeset
   alias Channelx.Auth.User
   alias Channelx.Conversation.Room
+  alias Channelx.Conversation.Message
 
   schema "users" do
     field :email, :string
@@ -10,6 +11,7 @@ defmodule Channelx.Auth.User do
     field :password_confirmation, :string, virtual: true
     field :username, :string
     has_many :rooms, Room
+    has_many :messages, Message
 
     timestamps()
   end
