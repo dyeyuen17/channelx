@@ -10,8 +10,10 @@
 <% end %>
 
 <div><%= @room.description %></div>
+<div class="pre-scrollable" style="min-height: 340px">
+  <ul class="list-group mt-5" id="messages"></ul>
 
-<ul class="list-group mt-5" id="messages"></ul>
+</div>
 
 <form class="input-group mt-3" id="new-message">
   <input type="text" class="form-control" placeholder="Message #<%= @room.name  %>" id="message-content" />
