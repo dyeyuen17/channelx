@@ -6,20 +6,11 @@ defmodule Channelx.Auth do
 		user = Repo.get_by(User, email: email)
 
 		cond do
-			user && user.password == password ->
+			user && Comeonin.Bcrypt.checkpw(password, user.password) ->
 				{:ok, user}
 			true ->
 				{:error, :unauthorized}
 		end
-	end
-
-	def current_user(conn) do
-	  user_id = Plug.Conn.get_session(conn, :current_user_id)
-	  if user_id, do: Repo.get(User, user_id)
-	end
-
-	def user_signed_in?(conn) do
-	  !!current_user(conn)
 	end
 
 	def sign_out(conn) do
@@ -29,5 +20,7 @@ defmodule Channelx.Auth do
 	def register(params) do
 	  User.registration_changeset(%User{}, params) |> Repo.insert()
 	end
+
+	def get_user!(id), do: User |> Repo.get!(id)
 
 end

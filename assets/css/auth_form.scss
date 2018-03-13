@@ -4,6 +4,13 @@
   --input-padding-y: .75rem;
 }
 
+/* Phoenix flash messages */
+.alert:empty { display: none; }
+
+.help-block{
+  color: #f86060;
+}
+
 .auth-form-wrapper {
   display: -ms-flexbox;
   display: -webkit-box;

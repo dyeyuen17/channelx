@@ -1,12 +1,13 @@
 defmodule Channelx.Conversation.Room do
   use Ecto.Schema
   import Ecto.Changeset
-
+  alias Channelx.Auth.User
 
   schema "rooms" do
     field :description, :string
     field :name, :string
     field :topic, :string
+    belongs_to :user, User
 
     timestamps()
   end

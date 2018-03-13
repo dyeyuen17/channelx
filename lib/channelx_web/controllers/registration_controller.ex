@@ -15,7 +15,9 @@ defmodule ChannelxWeb.RegistrationController do
 				|> redirect(to: room_path(conn, :index))
 
 			{:error, changeset} ->
-				render(conn, "new.html", changeset: changeset)
+				conn
+				|> put_flash(:error, "Registration failed!")
+				|> render("new.html", changeset: changeset)
 		end
 	end
 end

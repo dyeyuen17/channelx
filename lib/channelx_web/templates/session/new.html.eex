@@ -8,11 +8,13 @@
     <div class="form-label-group">
       <%= text_input f, :email, class: "form-control", placeholder: "Email address", required: true, autofocus: true, style: "height: 50px"%>
       <%= label f, :email, "Email address", class: "control-label" %>
+      <%= error_tag f, :email %>
     </div>
 
     <div class="form-label-group">
       <%= password_input f, :password, class: "form-control", placeholder: "Password", required: true, style: "height: 50px" %>
       <%= label f, :password, class: "control-label" %>
+      <%= error_tag f, :password %>
     </div>
 
     <%= submit "Sign in", class: "btn btn-lg btn-primary btn-block" %>

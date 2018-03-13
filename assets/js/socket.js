@@ -52,11 +52,42 @@ let socket = new Socket("/socket", {params: {token: window.userToken}})
 // from connect if you don't care about authentication.
 
 socket.connect()
+let channelRoomId = window.channelRoomId
+
 
 // Now that you are connected, you can join channels with a topic:
-let channel = socket.channel("topic:subtopic", {})
-channel.join()
+if (channelRoomId) {
+  let channel = socket.channel(`room:${channelRoomId}`, {})
+  console.log(channel)
+  console.log(channelRoomId)
+  channel.join()
   .receive("ok", resp => { console.log("Joined successfully", resp) })
   .receive("error", resp => { console.log("Unable to join", resp) })
+
+  channel.on(`room:${channelRoomId}:new_message`, (message) => {
+    console.log("message", message)
+    renderMessage(message)
+  });
+
+  document.querySelector("#new-message").addEventListener('submit', (e) => {
+    e.preventDefault()
+    let messageInput = e.target.querySelector('#message-content')
+
+    channel.push('message:add', { message: messageInput.value })
+
+    messageInput.value = ""
+  });
+}
+
+const renderMessage =  function(message) {
+  console.log(message.content)
+  let messageTemplate = `
+    <li class="list-group-item">
+      <strong>${message.user.username}</strong>:
+      ${message.content}
+    </li>
+  `
+  document.querySelector("#messages").innerHTML += messageTemplate
+};
 
 export default socket
