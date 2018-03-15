@@ -1,3 +1,3 @@
 defmodule ChannelxWeb.SessionView do
-	use ChannelxWeb, :view
+  use ChannelxWeb, :view
 end

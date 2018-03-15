@@ -1,3 +1,3 @@
 defmodule ChannelxWeb.RegistrationView do
-	use ChannelxWeb, :view
+  use ChannelxWeb, :view
 end

@@ -2,10 +2,10 @@ defmodule ChannelxWeb.UserSocket do
   use Phoenix.Socket
 
   ## Channels
-  channel "room:*", ChannelxWeb.RoomChannel
+  channel("room:*", ChannelxWeb.RoomChannel)
 
   ## Transports
-  transport :websocket, Phoenix.Transports.WebSocket
+  transport(:websocket, Phoenix.Transports.WebSocket)
   # transport :longpoll, Phoenix.Transports.LongPoll
 
   # Socket params are passed from the client and can
@@ -24,6 +24,7 @@ defmodule ChannelxWeb.UserSocket do
     case Phoenix.Token.verify(socket, "user_token", token, max_age: @max_age) do
       {:ok, user_id} ->
         {:ok, assign(socket, :current_user_id, user_id)}
+
       {:error, _} ->
         :error
     end

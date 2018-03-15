@@ -5,11 +5,11 @@ defmodule Channelx.Conversation.Room do
   alias Channelx.Conversation.Message
 
   schema "rooms" do
-    field :description, :string
-    field :name, :string
-    field :topic, :string
-    belongs_to :user, User
-    has_many :messages, Message
+    field(:description, :string)
+    field(:name, :string)
+    field(:topic, :string)
+    belongs_to(:user, User)
+    has_many(:messages, Message)
 
     timestamps()
   end

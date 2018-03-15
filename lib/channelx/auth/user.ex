@@ -6,12 +6,12 @@ defmodule Channelx.Auth.User do
   alias Channelx.Conversation.Message
 
   schema "users" do
-    field :email, :string
-    field :password, :string
-    field :password_confirmation, :string, virtual: true
-    field :username, :string
-    has_many :rooms, Room
-    has_many :messages, Message
+    field(:email, :string)
+    field(:password, :string)
+    field(:password_confirmation, :string, virtual: true)
+    field(:username, :string)
+    has_many(:rooms, Room)
+    has_many(:messages, Message)
 
     timestamps()
   end
@@ -41,6 +41,7 @@ defmodule Channelx.Auth.User do
     case changeset do
       %Ecto.Changeset{valid?: true, changes: %{password: password}} ->
         put_change(changeset, :password, Comeonin.Bcrypt.hashpwsalt(password))
+
       _ ->
         changeset
     end

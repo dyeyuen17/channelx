@@ -28,8 +28,9 @@ defmodule ChannelxWeb do
 
   def view do
     quote do
-      use Phoenix.View, root: "lib/channelx_web/templates",
-                        namespace: ChannelxWeb
+      use Phoenix.View,
+        root: "lib/channelx_web/templates",
+        namespace: ChannelxWeb
 
       # Import convenience functions from controllers
       import Phoenix.Controller, only: [get_flash: 2, view_module: 1]

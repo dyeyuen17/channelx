@@ -6,16 +6,14 @@
 use Mix.Config
 
 # General application configuration
-config :channelx,
-  ecto_repos: [Channelx.Repo]
+config :channelx, ecto_repos: [Channelx.Repo]
 
 # Configures the endpoint
 config :channelx, ChannelxWeb.Endpoint,
   url: [host: "localhost"],
   secret_key_base: "rmjsmcOJg4wOXMPGB4mSy+GBVucjg8riGxxTaACXPvU0hK4yAQO8CaDJTFFNidGp",
   render_errors: [view: ChannelxWeb.ErrorView, accepts: ~w(html json)],
-  pubsub: [name: Channelx.PubSub,
-           adapter: Phoenix.PubSub.PG2]
+  pubsub: [name: Channelx.PubSub, adapter: Phoenix.PubSub.PG2]
 
 # Configures Elixir's Logger
 config :logger, :console,
@@ -24,4 +22,4 @@ config :logger, :console,
 
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
-import_config "#{Mix.env}.exs"
+import_config "#{Mix.env()}.exs"

@@ -1,3 +1,3 @@
 defmodule ChannelxWeb.RoomView do
-	use ChannelxWeb, :view
+  use ChannelxWeb, :view
 end

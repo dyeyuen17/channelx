@@ -4,11 +4,10 @@ defmodule Channelx.Conversation.Message do
   alias Channelx.Auth.User
   alias Channelx.Conversation.Room
 
-
   schema "messages" do
-    field :message, :string
-    belongs_to :user, User
-    belongs_to :room, Room
+    field(:message, :string)
+    belongs_to(:user, User)
+    belongs_to(:room, Room)
 
     timestamps()
   end
