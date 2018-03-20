@@ -1,6 +1,7 @@
 defmodule Channelx.Conversation do
   alias Channelx.Repo
   alias Channelx.Conversation.Room
+  alias Channelx.Conversation.Message
 
   def list_rooms do
     Repo.all(Room)
@@ -29,5 +30,12 @@ defmodule Channelx.Conversation do
 
   def delete_room(%Room{} = room) do
     Repo.delete(room)
+  end
+
+  def create_message(user, room, attrs \\ %{}) do
+    user
+      |> Ecto.build_assoc(:messages, room_id: room.id)
+      |> Message.changeset(attrs)
+      |> Repo.insert()
   end
 end
