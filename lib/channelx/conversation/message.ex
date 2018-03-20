@@ -5,7 +5,7 @@ defmodule Channelx.Conversation.Message do
   alias Channelx.Conversation.Room
 
   schema "messages" do
-    field(:message, :string)
+    field(:content, :string)
     belongs_to(:user, User)
     belongs_to(:room, Room)
 
@@ -15,7 +15,7 @@ defmodule Channelx.Conversation.Message do
   @doc false
   def changeset(message, attrs) do
     message
-    |> cast(attrs, [:message])
-    |> validate_required([:message])
+    |> cast(attrs, [:content])
+    |> validate_required([:content])
   end
 end
