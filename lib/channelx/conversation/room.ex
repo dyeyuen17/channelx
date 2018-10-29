@@ -17,7 +17,7 @@ defmodule Channelx.Conversation.Room do
     |> cast(attrs, [:name, :description, :topic])
     |> validate_required([:name])
     |> unique_constraint(:name)
-    |> validate_length(:name, min: 3, max: 25)
-    |> validate_length(:topic, min: 5, max: 153)
+    |> validate_length(:name, min: 3, max: 40)
+    |> validate_length(:topic, min: 5, max: 150)
   end
 end
