@@ -7,7 +7,7 @@ use Mix.Config
 # watchers to your application. For example, we use it
 # with brunch.io to recompile .js and .css sources.
 config :channelx, ChannelxWeb.Endpoint,
-  http: [port: 4420],
+  http: [port: 4155],
   debug_errors: true,
   code_reloader: true,
   check_origin: false,
